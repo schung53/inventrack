@@ -68,8 +68,8 @@ export const inventorySlice = createSlice({
                 let updateIndex = state.inventory.findIndex(
                     (item) => item._id === action.payload._id
                 );
-                state.updateLoading = false;
                 state.inventory[updateIndex] = action.payload;
+                state.updateLoading = false;
             })
             .addCase(deleteInventoryItemAsync.pending, (state) => {
                 state.deleteLoading = true;

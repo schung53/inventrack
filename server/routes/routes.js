@@ -33,8 +33,9 @@ router.route('/update')
         trackingNumber: req.body.trackingNumber,
         dateRegistered: req.body.dateRegistered
     };
+    var id = mongoose.Types.ObjectId(req.body._id);
 
-    InventoryItem.updateOne({_id: req.body._id}, doc, (err, result) => {
+    InventoryItem.findByIdAndUpdate(id, { $set: doc }, { new: true }, (err, result) => {
         if (err) {
             res.send(err);
         } else {
@@ -45,7 +46,6 @@ router.route('/update')
 
 // Route for deleting an existing inventory item
 router.get('/delete', (req,res) => {
-    console.log(req.query.id)
     var id = mongoose.Types.ObjectId(req.query.id);
 
     InventoryItem
