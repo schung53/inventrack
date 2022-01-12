@@ -12,6 +12,9 @@ export class InventoryView extends Component {
             trackingNumber: 'xxxx1234'
         }
         fetchInitialInventoryAsync();
+        setTimeout(() => {
+            createInventoryItemAsync(newItem)
+        }, 4000);
     }
 
     render() {

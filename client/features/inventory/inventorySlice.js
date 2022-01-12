@@ -18,7 +18,7 @@ export const createInventoryItemAsync = createAsyncThunk(
     'inventory/createInventoryItem',
     async (newItem) => {
         const response = await createInventoryItem(newItem);
-        return response;
+        return response.data.newDocument;
     }
 );
 
@@ -34,9 +34,11 @@ export const inventorySlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchInitialInventoryAsync.fulfilled, (state, action) => {
-                console.log(action.payload)
                 state.loading = false;
                 state.inventory = action.payload;
+            })
+            .addCase(createInventoryItemAsync.fulfilled, (state, action) => {
+                state.inventory = [action.payload, ...state.inventory];
             });
     },
 });

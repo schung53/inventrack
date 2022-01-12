@@ -15,11 +15,11 @@ router.route('/create')
     inventoryItem.trackingNumber = req.body.trackingNumber;
     inventoryItem.dateRegistered = req.body.dateRegistered;
 
-    inventoryItem.save((err) => {
+    inventoryItem.save((err, result) => {
         if (err) {
             res.send(err);
         } else {
-            res.send('Inventory item successfully added.');
+            res.json({ message: 'Inventory item successfully added.', newDocument: result });
         }
     })
 });
@@ -37,7 +37,7 @@ router.route('/update')
         if (err) {
             res.send(err);
         } else {
-            res.send('Inventory item successfully updated.');
+            res.json({ message: 'Inventory item successfully updated.', newDocument: result });
         }
     });
 });
