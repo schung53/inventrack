@@ -13,5 +13,5 @@ export function updateInventoryItem(updatedItem) {
 }
 
 export function deleteInventoryItem(id) {
-    return axios.post(`/delete?id=${id}`);
+    return axios.get(`/delete?id=${id}`);
 }

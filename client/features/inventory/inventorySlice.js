@@ -76,7 +76,7 @@ export const inventorySlice = createSlice({
             })
             .addCase(deleteInventoryItemAsync.fulfilled, (state, action) => {
                 let deleteIndex = state.inventory.findIndex(
-                    (item) => item._id === action.payload._id
+                    (item) => item._id === action.payload
                 );
                 state.inventory = [
                     ...state.inventory.slice(0, deleteIndex),

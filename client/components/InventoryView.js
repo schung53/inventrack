@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 
 import { connect } from 'react-redux';
-import { fetchInitialInventoryAsync, createInventoryItemAsync } from '../features/inventory/inventorySlice';
+import { fetchInitialInventoryAsync, createInventoryItemAsync, deleteInventoryItemAsync } from '../features/inventory/inventorySlice';
 
 export class InventoryView extends Component {
     componentDidMount() {
-        const { fetchInitialInventoryAsync, createInventoryItemAsync } = this.props;
+        const { fetchInitialInventoryAsync, createInventoryItemAsync, deleteInventoryItemAsync } = this.props;
         const newItem = {
             name: 'Lawn Mower',
             dateRegistered: new Date(),
@@ -13,7 +13,7 @@ export class InventoryView extends Component {
         }
         fetchInitialInventoryAsync();
         setTimeout(() => {
-            createInventoryItemAsync(newItem)
+            deleteInventoryItemAsync("61deac2bd975c0c2e76d6618")
         }, 4000);
     }
 
@@ -35,7 +35,8 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     fetchInitialInventoryAsync,
-    createInventoryItemAsync
+    createInventoryItemAsync,
+    deleteInventoryItemAsync
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(InventoryView);

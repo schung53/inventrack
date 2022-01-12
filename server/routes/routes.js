@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var InventoryItem = require('../../models/InventoryItem');
+var mongoose = require('mongoose');
 
 router.get('/', function(req, res){
     res.render('index')
@@ -44,11 +45,11 @@ router.route('/update')
 
 // Route for deleting an existing inventory item
 router.get('/delete', (req,res) => {
-    var id = req.query.id;
+    console.log(req.query.id)
+    var id = mongoose.Types.ObjectId(req.query.id);
+
     InventoryItem
-    .find({_id: id})
-    .remove()
-    .exec((err, result) => {
+    .findByIdAndRemove(id, (err) => {
         if (err) {
             res.send(err);
         } else {
