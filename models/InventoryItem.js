@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 
 var inventoryItemSchema = new Schema({
     name: String,
-    uuid: String,
+    trackingNumber: String,
     dateRegistered: Date
 });
 
-module.exports = mongoose.model('Expense', inventoryItemSchema);
+module.exports = mongoose.model('items', inventoryItemSchema);

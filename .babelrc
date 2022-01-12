@@ -4,6 +4,9 @@
         "@babel/preset-react"
     ],
     "plugins": [
-        ["@babel/transform-runtime"]
+        [
+            "@babel/plugin-transform-runtime", 
+            { "regenerator": true }
+        ]
     ]
 }

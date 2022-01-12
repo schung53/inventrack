@@ -12,7 +12,7 @@ router.route('/create')
 .post((req,res) => {
     var inventoryItem = new InventoryItem();
     inventoryItem.name = req.body.name;
-    inventoryItem.uuid = req.body.uuid;
+    inventoryItem.trackingNumber = req.body.trackingNumber;
     inventoryItem.dateRegistered = req.body.dateRegistered;
 
     inventoryItem.save((err) => {
@@ -29,7 +29,7 @@ router.route('/update')
 .post((req,res) => {
     const doc = {
         name: req.body.name,
-        uuid: req.body.uuid,
+        trackingNumber: req.body.trackingNumber,
         dateRegistered: req.body.dateRegistered
     };
 
@@ -45,7 +45,10 @@ router.route('/update')
 // Route for deleting an existing inventory item
 router.get('/delete', (req,res) => {
     var id = req.query.id;
-    InventoryItem.find({_id: id}).remove().exec((err, result) => {
+    InventoryItem
+    .find({_id: id})
+    .remove()
+    .exec((err, result) => {
         if (err) {
             res.send(err);
         } else {
@@ -55,8 +58,9 @@ router.get('/delete', (req,res) => {
 });
 
 // Route for fetching 20 of the latest registered items
-router.get('/fetchAll', (req,res) => {
-    InventoryItem.find({})
+router.get('/fetchInitial', (req,res) => {
+    InventoryItem
+    .find()
     .sort({'dateRegistered': -1})
     .limit(20)
     .exec((err, items) => {
