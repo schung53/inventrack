@@ -8,7 +8,7 @@ export class InventoryView extends Component {
         const { fetchInitialInventoryAsync, updateInventoryItemAsync, deleteInventoryItemAsync } = this.props;
         const newItem = {
             _id: '61dece9d86f35018274106d8',
-            name: 'Cosmo Kramer',
+            name: 'Cr',
             dateRegistered: new Date(),
             trackingNumber: 'hhhhhh1234',
             __v: 0

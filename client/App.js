@@ -1,6 +1,6 @@
 import React from 'react';
-import InventoryView from './InventoryView';
-import '../css/App.css';
+import InventoryView from './components/InventoryView';
+import './css/App.css';
 
 function App() {
   return (

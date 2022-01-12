@@ -43,8 +43,7 @@ export const deleteInventoryItemAsync = createAsyncThunk(
 export const inventorySlice = createSlice({
     name: 'inventory',
     initialState,
-    reducers: {
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchInitialInventoryAsync.pending, (state) => {
