@@ -52,7 +52,7 @@ router.get('/delete', (req,res) => {
         if (err) {
             res.send(err);
         } else {
-            res.send('Inventory item successfully deleted.');
+            res.json({ message: 'Inventory item successfully deleted.', _id: id });
         }
     });
 });

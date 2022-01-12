@@ -7,3 +7,11 @@ export function fetchInitialInventory() {
 export function createInventoryItem(newItem) {
     return axios.post('/create', newItem);
 }
+
+export function updateInventoryItem(updatedItem) {
+    return axios.post('/update', updatedItem);
+}
+
+export function deleteInventoryItem(id) {
+    return axios.post(`/delete?id=${id}`);
+}

@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchInitialInventory, createInventoryItem } from './inventoryAPI';
+import { fetchInitialInventory, createInventoryItem, updateInventoryItem } from './inventoryAPI';
 
 const initialState = {
     inventory: [],
-    loading: true
+    loading: true,
+    createLoading: false,
+    updateLoading: false
 };
 
 export const fetchInitialInventoryAsync = createAsyncThunk(
@@ -22,11 +24,18 @@ export const createInventoryItemAsync = createAsyncThunk(
     }
 );
 
+export const updateInventoryItemAsync = createAsyncThunk(
+    'inventory/updateInventoryItem',
+    async (updatedItem) => {
+        const response = await updateInventoryItem(updatedItem);
+        return response.data.newDocument;
+    }
+);
+
 export const inventorySlice = createSlice({
     name: 'inventory',
     initialState,
     reducers: {
-
     },
     extraReducers: (builder) => {
         builder
@@ -37,8 +46,22 @@ export const inventorySlice = createSlice({
                 state.loading = false;
                 state.inventory = action.payload;
             })
+            .addCase(createInventoryItemAsync.pending, (state) => {
+                state.createLoading = true;
+            })
             .addCase(createInventoryItemAsync.fulfilled, (state, action) => {
+                state.createLoading = false;
                 state.inventory = [action.payload, ...state.inventory];
+            })
+            .addCase(updateInventoryItemAsync.pending, (state) => {
+                state.updateLoading = true;
+            })
+            .addCase(updateInventoryItemAsync.fulfilled, (state, action) => {
+                let updateIndex = state.inventory.findIndex(
+                    (item) => item._id === action.payload._id
+                );
+                state.updateLoading = false;
+                state.inventory[updateIndex] = action.payload;
             });
     },
 });
