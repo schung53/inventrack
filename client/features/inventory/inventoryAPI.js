@@ -17,12 +17,8 @@ export function deleteInventoryItem(id) {
 }
 
 export function uploadImage(file) {
-    console.log(file)
     var formData = new FormData();
     formData.append("file", file);
-    for(var pair of formData.entries()) {
-        console.log(pair[0]+', '+pair[1]);
-    }
 
     return axios.post('/image', formData, {
         headers: {

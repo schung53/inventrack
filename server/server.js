@@ -6,7 +6,6 @@ var mongoose = require('mongoose');
 require('dotenv').config();
 var AWS = require("aws-sdk");
 var multer = require('multer');
-var upload = multer();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../client'));

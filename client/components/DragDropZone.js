@@ -43,10 +43,6 @@ export class DragDrop extends Component {
       >
         Submit
       </button>
-      <img
-      src="https://shopify-be-challenge.s3.us-west-2.amazonaws.com/mew.png"
-      alt="Example"
-      ></img>
       </div>
     )
   }
