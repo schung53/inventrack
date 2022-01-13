@@ -11,7 +11,9 @@ const initialState = {
     inventory: [],
     loading: true,
     createLoading: false,
-    updateLoading: false
+    updateLoading: false,
+    deleteLoading: false,
+    uploadImageLoading: false
 };
 
 export const fetchInitialInventoryAsync = createAsyncThunk(
@@ -95,12 +97,13 @@ export const inventorySlice = createSlice({
                     ...state.inventory.slice(0, deleteIndex),
                     ...state.inventory.slice(deleteIndex + 1)
                 ];
+                state.deleteLoading = false;
             })
             .addCase(uploadImageAsync.pending, (state) => {
-                state.uploadImageLoading = false;
+                state.uploadImageLoading = true;
             })
             .addCase(uploadImageAsync.fulfilled, (state, action) => {
-
+                state.uploadImageLoading = false;
             });
     }
 });
