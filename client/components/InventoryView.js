@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-
 import { connect } from 'react-redux';
 import { fetchInitialInventoryAsync, updateInventoryItemAsync, deleteInventoryItemAsync } from '../features/inventory/inventorySlice';
 
@@ -14,9 +13,6 @@ export class InventoryView extends Component {
             __v: 0
         }
         fetchInitialInventoryAsync();
-        setTimeout(() => {
-            updateInventoryItemAsync(newItem)
-        }, 4000);
     }
 
     render() {

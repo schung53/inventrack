@@ -18,4 +18,14 @@ mongoose.connect(
 
 app.use('/', router);
 
+var AWS = require("aws-sdk");
+
+AWS.config.getCredentials(function(err) {
+  if (err) {console.log(err);
+  console.log("credentials not loaded") }
+  else {
+    console.log("Access key:", AWS.config.credentials.accessKeyId);
+  }
+});
+
 module.exports=app;

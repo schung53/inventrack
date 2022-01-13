@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require('body-parser');
+require('body-parser');
 var InventoryItem = require('../../models/InventoryItem');
 var mongoose = require('mongoose');
 
