@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { fetchInitialInventoryAsync, updateInventoryItemAsync, deleteInventoryItemAsync } from '../features/inventory/inventorySlice';
+import Basic from './DragDropZone';
 
 export class InventoryView extends Component {
     componentDidMount() {
@@ -22,6 +23,7 @@ export class InventoryView extends Component {
             <div>
                 HELLO WORLD
                 {JSON.stringify(inventory)}
+                <Basic />
             </div>
         )
     }

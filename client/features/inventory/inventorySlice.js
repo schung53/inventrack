@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchInitialInventory, createInventoryItem, updateInventoryItem, deleteInventoryItem } from './inventoryAPI';
+import {
+    fetchInitialInventory,
+    createInventoryItem,
+    updateInventoryItem,
+    deleteInventoryItem,
+    uploadImage
+} from './inventoryAPI';
 
 const initialState = {
     inventory: [],
@@ -37,6 +43,14 @@ export const deleteInventoryItemAsync = createAsyncThunk(
     async (id) => {
         const response = await deleteInventoryItem(id);
         return response.data._id;
+    }
+);
+
+export const uploadImageAsync = createAsyncThunk(
+    'inventory/uploadImage',
+    async (file) => {
+        const response = await uploadImage(file);
+        return response;
     }
 );
 
@@ -81,8 +95,14 @@ export const inventorySlice = createSlice({
                     ...state.inventory.slice(0, deleteIndex),
                     ...state.inventory.slice(deleteIndex + 1)
                 ];
+            })
+            .addCase(uploadImageAsync.pending, (state) => {
+                state.uploadImageLoading = false;
+            })
+            .addCase(uploadImageAsync.fulfilled, (state, action) => {
+
             });
-    },
+    }
 });
 
 export const selectInventory = (state) => state.inventory.inventory;

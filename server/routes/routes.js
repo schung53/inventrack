@@ -1,14 +1,19 @@
+import { v4 as uuidv4 } from 'uuid';
 var express = require('express');
 var router = express.Router();
 require('body-parser');
 var InventoryItem = require('../../models/InventoryItem');
 var mongoose = require('mongoose');
+var AWS = require('aws-sdk');
+var multer = require("multer")
+var upload = multer({ dest: '../../uploads'});
+var fs =  require('fs');
 
 router.get('/', function(req, res){
     res.render('index')
 });
 
-// Route for creating a new inventory item
+// Endpoint for creating a new inventory item
 router.route('/create')
 .post((req,res) => {
     var inventoryItem = new InventoryItem();
@@ -25,7 +30,7 @@ router.route('/create')
     })
 });
 
-// Route for updating an existing inventory item
+// Endpoint for updating an existing inventory item
 router.route('/update')
 .post((req,res) => {
     const doc = {
@@ -44,7 +49,7 @@ router.route('/update')
     });
 });
 
-// Route for deleting an existing inventory item
+// Endpoint for deleting an existing inventory item
 router.get('/delete', (req,res) => {
     var id = mongoose.Types.ObjectId(req.query.id);
 
@@ -58,7 +63,7 @@ router.get('/delete', (req,res) => {
     });
 });
 
-// Route for fetching 20 of the latest registered items
+// Endpoint for fetching 20 of the latest registered items
 router.get('/fetchInitial', (req,res) => {
     InventoryItem
     .find()
@@ -70,6 +75,33 @@ router.get('/fetchInitial', (req,res) => {
         } else {
             res.json(items);
         }
+    });
+});
+
+// Initialize S3 service object
+var s3 = new AWS.S3({
+    apiVersion: "2006-03-01",
+    params: { Bucket: process.env.BUCKET_NAME }
+});
+
+// Endpoint for uploading an image to S3 bucket
+router.route('/image')
+.post(upload.single('file'), (req,res) => {
+    fs.readFile(req.file.path, (err, fileBuffer) => {
+        var params = {
+            Bucket: process.env.BUCKET_NAME,
+            Key: req.file.originalname,
+            Body: fileBuffer
+        };
+
+        var promise = s3.putObject(params).promise();
+
+        promise.then((data) => {
+            console.log(data);
+        })
+        .catch((err) => {
+            console.log(err.message);
+        })
     });
 });
 

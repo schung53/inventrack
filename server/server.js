@@ -2,15 +2,20 @@ var express = require('express');
 var router = require('./routes/routes.js');
 var path = require('path');
 var app = express();
-var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 require('dotenv').config();
+var AWS = require("aws-sdk");
+var multer = require('multer');
+var upload = multer();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../client'));
 app.use(express.static(path.join(__dirname, '../client')));
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 1000000}));
+
+// To parse multipart/form-data
+app.use(express.static('public'));
 
 mongoose.connect(
     `mongodb+srv://schung53:${process.env.MONGODB_PW}@shopify-be-challenge.crngp.mongodb.net/inventory?retryWrites=true&w=majority`
@@ -18,14 +23,11 @@ mongoose.connect(
 
 app.use('/', router);
 
-var AWS = require("aws-sdk");
-
-AWS.config.getCredentials(function(err) {
-  if (err) {console.log(err);
-  console.log("credentials not loaded") }
-  else {
-    console.log("Access key:", AWS.config.credentials.accessKeyId);
-  }
+AWS.config.update({
+  region: process.env.BUCKET_REGION,
+  credentials: new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: process.env.IDENTITY_POOL_ID
+  })
 });
 
 module.exports=app;
