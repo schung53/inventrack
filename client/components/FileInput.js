@@ -33,8 +33,10 @@ export default class FileInput extends Component {
         }
 
         const handleSubmit = () => {
+            const originalFile = document.getElementById('imageUpload').files.item(0);
+            uploadImage(originalFile);
             canvas.toBlob((blob) => {
-                const fileName = document.getElementById('imageUpload').files.item(0).name;
+                const fileName = 'mini-' + originalFile.name;
                 let resizedFile = new File([blob], fileName, { type: "image/jpeg" });
                 uploadImage(resizedFile);
             }, 'image/jpeg');

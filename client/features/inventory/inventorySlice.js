@@ -4,10 +4,8 @@ import {
     createInventoryItem,
     updateInventoryItem,
     deleteInventoryItem,
-    uploadImage,
-    uploadBlob
+    uploadImage
 } from './inventoryAPI';
-import { generateThumbnail } from '../../util/image';
 
 const initialState = {
     inventory: [],
@@ -58,15 +56,6 @@ export const uploadImageAsync = createAsyncThunk(
     }
 );
 
-export const uploadThumbnailAsync = createAsyncThunk(
-    'inventory/uploadThumbnail',
-    async (file) => {
-        generateThumbnail(file);
-        /* const response = await uploadImage(thumbnail);
-        return response; */
-    }
-);
-
 export const inventorySlice = createSlice({
     name: 'inventory',
     initialState,
@@ -114,12 +103,6 @@ export const inventorySlice = createSlice({
                 state.uploadImageLoading = true;
             })
             .addCase(uploadImageAsync.fulfilled, (state, action) => {
-                state.uploadImageLoading = false;
-            })
-            .addCase(uploadThumbnailAsync.pending, (state) => {
-                state.uploadImageLoading = true;
-            })
-            .addCase(uploadThumbnailAsync.fulfilled, (state, action) => {
                 state.uploadImageLoading = false;
             });
     }
