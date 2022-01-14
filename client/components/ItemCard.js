@@ -96,7 +96,7 @@ export class ItemCard extends Component {
 
     render() {
         const { classes, item, index } = this.props;
-        const humanizedDate = moment(item.dateRegistered).format("MMMM Do YYYY");
+        const humanizedDate = moment(item.dateRegistered).format("MMMM Do YYYY h:mm a");
 
         return (
             <div>

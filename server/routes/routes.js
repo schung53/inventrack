@@ -106,28 +106,4 @@ router.route('/image')
     });
 });
 
-// Endpoint for uploading an image received as a Blob to S3
-router.route('/blob')
-.post(upload.single('file'), (req,res) => {
-    var randomString = Math.random().toString(36).slice(2);
-    var fileToUpload = new File([req.file], 'eqs.png')
-    var fileContent = fs.readFileSync(fileToUpload);
-    console.log(fileContent)
-
-    var params = {
-        Bucket: process.env.BUCKET_NAME,
-        Key: randomString+".png",
-        Body: fileContent
-    };
-
-    var promise = s3.putObject(params).promise();
-
-    promise.then((data) => {
-        console.log(data);
-    })
-    .catch((err) => {
-        console.log(err.message);
-    })
-});
-
 module.exports = router;
