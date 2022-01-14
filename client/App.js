@@ -1,11 +1,16 @@
 import React from 'react';
-import InventoryView from './components/InventoryView';
+import Home from './pages/home';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './css/App.css';
 
 function App() {
   return (
     <div className="App">
-      <InventoryView />
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Home/>}/>
+        </Routes>
+      </Router>
     </div>
   );
 }

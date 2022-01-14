@@ -5,6 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #000f1c;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #001c33;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #90A4AE;
+  border-radius: 3px;
 }
 
 code {
