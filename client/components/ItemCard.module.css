@@ -1,0 +1,6 @@
+.imageButton {
+    max-width: 96%;
+    border-radius: 7px;
+    margin: 5px 5px 5px 5px;
+    cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LoadingCard from '../components/LoadingCard';
+import ItemCard from '../components/ItemCard';
 
 // Redux
 import { connect } from 'react-redux';
@@ -34,7 +35,7 @@ export class home extends Component {
                             </Grid>
                             <Grid container>
                                 <Grid item>
-                                    <Typography variant='body2' style={{ margin: '10px auto 20px 15px' }} color='#6db9fb'>
+                                    <Typography variant='body1' style={{ margin: '10px auto 20px 15px' }} color='#6db9fb'>
                                         Inventory tracking made easy
                                     </Typography>
                                 </Grid>
@@ -55,7 +56,7 @@ export class home extends Component {
                                         {inventory.map((item, index) => {
                                             return (
                                                 <Grid key={item._id} item>
-                                                    {JSON.stringify(item)}
+                                                    <ItemCard index={index} item={item} />
                                                 </Grid>
                                             )
                                         })}
@@ -66,7 +67,6 @@ export class home extends Component {
                         <Grid item xs={0.5} />
                     </Grid>
                 </div>
-                {/* ADD MORE BUTTON */}
                 <Typography variant='body2' style={{ margin: '20px auto 20px auto' }} color='white'>
                     Made with ♥ by James S. Chung – 2022
                 </Typography>
