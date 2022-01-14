@@ -5,7 +5,7 @@ var InventoryItem = require('../../models/InventoryItem');
 var mongoose = require('mongoose');
 var AWS = require('aws-sdk');
 var multer = require("multer")
-var upload = multer({ dest: __dirname + '/public/uploads/' });
+var upload = multer({ dest: 'public/uploads' });
 var fs =  require('fs');
 
 router.get('/', function(req, res){

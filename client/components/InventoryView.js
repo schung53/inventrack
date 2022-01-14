@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { fetchInitialInventoryAsync, updateInventoryItemAsync, deleteInventoryItemAsync } from '../features/inventory/inventorySlice';
-import Basic from './DragDropZone';
+import Basic from './FileInput';
 
 export class InventoryView extends Component {
     componentDidMount() {
