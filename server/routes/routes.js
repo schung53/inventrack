@@ -5,7 +5,7 @@ var InventoryItem = require('../../models/InventoryItem');
 var mongoose = require('mongoose');
 var AWS = require('aws-sdk');
 var multer = require("multer")
-var upload = multer({ dest: '../uploads'});
+var upload = multer({ dest: __dirname + '/public/uploads/' });
 var fs =  require('fs');
 
 router.get('/', function(req, res){
@@ -104,6 +104,30 @@ router.route('/image')
             console.log(err.message);
         })
     });
+});
+
+// Endpoint for uploading an image received as a Blob to S3
+router.route('/blob')
+.post(upload.single('file'), (req,res) => {
+    var randomString = Math.random().toString(36).slice(2);
+    var fileToUpload = new File([req.file], 'eqs.png')
+    var fileContent = fs.readFileSync(fileToUpload);
+    console.log(fileContent)
+
+    var params = {
+        Bucket: process.env.BUCKET_NAME,
+        Key: randomString+".png",
+        Body: fileContent
+    };
+
+    var promise = s3.putObject(params).promise();
+
+    promise.then((data) => {
+        console.log(data);
+    })
+    .catch((err) => {
+        console.log(err.message);
+    })
 });
 
 module.exports = router;

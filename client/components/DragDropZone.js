@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FileUploader } from "react-drag-drop-files";
-import { uploadImageAsync } from '../features/inventory/inventorySlice';
+import { uploadImageAsync, uploadThumbnailAsync } from '../features/inventory/inventorySlice';
 import { connect } from 'react-redux';
 
 const fileTypes = ["JPG", "PNG", "GIF"];
@@ -24,11 +24,11 @@ export class DragDrop extends Component {
   };
 
   handleSubmit = () => {
-    const { uploadImageAsync } = this.props;
+    const { uploadImageAsync, uploadThumbnailAsync } = this.props;
     const { file } = this.state;
 
-    uploadImageAsync(file);
-    
+    // uploadImageAsync(file);
+    uploadThumbnailAsync(file);
   }
 
   render() {
@@ -52,7 +52,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  uploadImageAsync
+  uploadImageAsync,
+  uploadThumbnailAsync
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(DragDrop);
