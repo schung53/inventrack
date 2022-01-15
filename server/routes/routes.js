@@ -19,6 +19,8 @@ router.route('/create')
     inventoryItem.name = req.body.name;
     inventoryItem.trackingNumber = req.body.trackingNumber;
     inventoryItem.dateRegistered = req.body.dateRegistered;
+    inventoryItem.imageURL = req.body.imageURL;
+    inventoryItem.thumbnailURL = req.body.thumbnailURL;
 
     inventoryItem.save((err, result) => {
         if (err) {
@@ -35,7 +37,9 @@ router.route('/update')
     const doc = {
         name: req.body.name,
         trackingNumber: req.body.trackingNumber,
-        dateRegistered: req.body.dateRegistered
+        dateRegistered: req.body.dateRegistered,
+        imageURL: req.body.imageURL,
+        thumbnailURL: req.body.thumbnailURL
     };
     var id = mongoose.Types.ObjectId(req.body._id);
 
@@ -98,11 +102,13 @@ router.route('/image')
         var promise = s3.putObject(params).promise();
 
         promise.then((data) => {
-            console.log(data);
+            console.log(params.Key);
+            res.send(params.Key);
         })
         .catch((err) => {
+            res.send(err);
             console.log(err.message);
-        })
+        });
     });
 });
 
