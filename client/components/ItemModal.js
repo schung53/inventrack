@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@mui/styles';
 import DeleteButton from './DeleteButton';
+import moment from 'moment';
 import './ItemModal.module.css';
 
 // Redux
 import { connect } from 'react-redux';
-import { setModalOpen } from '../features/inventory/inventorySlice';
+import { setModalOpen, updateInventoryItemAsync } from '../features/inventory/inventorySlice';
 
 // UI
 import { Button } from '@mui/material';
@@ -17,7 +18,9 @@ import { DialogContent } from '@mui/material';
 import { DialogActions } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Typography } from '@mui/material';
+import { TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 
 const styles = {
     button: {
@@ -63,15 +66,62 @@ const styles = {
 };
 
 export class ItemModal extends Component {
+    constructor() {
+        super();
+        this.state = {
+            name: null,
+            trackingNumber: null,
+            dateRegistered: null
+        };
+    }
+
+    componentDidMount() {
+        const { item } = this.props;
+        this.setState({
+            name: item.name,
+            trackingNumber: item.trackingNumber,
+            dateRegistered: item.dateRegistered
+        });
+    }
+
     handleOpen = () => {
-        const { index, setModalOpen } = this.props;
+        const { item, index, setModalOpen } = this.props;
         setModalOpen({ index, isOpen: true });
+        this.setState({
+            name: item.name,
+            trackingNumber: item.trackingNumber,
+            dateRegistered: item.dateRegistered
+        });
     };
 
     handleClose = () => {
         const { index, setModalOpen } = this.props;
         setModalOpen({ index, isOpen: false });
     };
+
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
+    handleDateChange = () => {
+        this.setState({ dateRegistered: new Date() });
+    }
+
+    handleUpdate = () => {
+        const { item, updateInventoryItemAsync } = this.props;
+        const updatedItem = {
+            _id: item._id,
+            name: this.state.name,
+            trackingNumber: this.state.trackingNumber,
+            dateRegistered: this.state.dateRegistered,
+            imageURL: item.imageURL,
+            thumbnailURL: item.thumbnailURL
+        };
+        updateInventoryItemAsync(updatedItem);
+        this.handleClose();
+    }
 
     _renderCardMedia() {
         const { item } = this.props;
@@ -89,6 +139,8 @@ export class ItemModal extends Component {
 
     render() {
         const { classes, inventory, item, index } = this.props;
+        const humanizedDate = moment(this.state.dateRegistered).format("MMMM Do YYYY h:mm a");
+
         return (
             <div>
                 <Button
@@ -118,18 +170,75 @@ export class ItemModal extends Component {
                     </DialogTitle>
                     <DialogContent className={classes.dialogContent}>
                         {this._renderCardMedia()}
-                        <Grid>
-                            <Typography variant='body1' className={classes.date}>
-                                {"Date Registered: " + item.dateRegistered}
-                            </Typography>
+                        <Grid container>
+                            <Grid item>
+                                <Typography variant='body1' className={classes.date}>
+                                    {"Name: "}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    name="name"
+                                    value={this.state.name}
+                                    onChange={this.handleChange}
+                                    variant="filled"
+                                    style={{ margin: '0 0 5px 80px', width: '300px' }}
+                                />
+                            </Grid>
                         </Grid>
-                        <Grid>
-                            <Typography variant='body1' className={classes.date}>
-                                {"Tracking Number: " + item.trackingNumber}
-                            </Typography>
+                        <Grid container>
+                            <Grid item>
+                                <Typography variant='body1' className={classes.date}>
+                                    {"Date Registered: "}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    name="dateRegistered"
+                                    value={humanizedDate}
+                                    onChange={this.handleChange}
+                                    disabled
+                                    variant="filled"
+                                    style={{ margin: '5px 0 5px 5px', width: '300px' }}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    size='small'
+                                    variant='outlined'
+                                    onClick={this.handleDateChange}
+                                >
+                                    Reset
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        <Grid container>
+                            <Grid item>
+                                <Typography variant='body1' className={classes.date}>
+                                    {"Tracking Number: "}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    name="trackingNumber"
+                                    value={this.state.trackingNumber}
+                                    onChange={this.handleChange}
+                                    variant="filled"
+                                    style={{ margin: '5px 0 5px 0', width: '300px' }}
+                                />
+                            </Grid>
                         </Grid>
                     </DialogContent>
                     <DialogActions>
+                        <Button
+                            size='small'
+                            variant='contained'
+                            onClick={this.handleUpdate}
+                            style={{ color: 'white', backgroundColor: '#004d40' }}
+                        >
+                            Update
+                            <ChangeCircleIcon />
+                        </Button>
                         <DeleteButton id={item._id} />
                     </DialogActions>
                 </Dialog>
@@ -143,7 +252,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    setModalOpen
+    setModalOpen,
+    updateInventoryItemAsync
 };
 
 ItemModal.propTypes = {
