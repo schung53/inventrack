@@ -34,10 +34,12 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "webpack": "webpack",
-    "start": "npm run webpack && nodemon --exec babel-node -- bin/www",
-    "heroku-prebuild": "npm install -f",
-    "heroku-postbuild": "npm run prod"
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
