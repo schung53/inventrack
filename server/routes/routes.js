@@ -101,13 +101,13 @@ router.route('/image')
 
         var promise = s3.putObject(params).promise();
 
+        const imageURL = `https://${process.env.BUCKET_NAME}.s3.${process.env.BUCKET_REGION}.amazonaws.com/${params.Key}`;
+
         promise.then((data) => {
-            console.log(params.Key);
-            res.send(params.Key);
+            res.json({ message: "Image successfully added.", URL: imageURL });
         })
         .catch((err) => {
             res.send(err);
-            console.log(err.message);
         });
     });
 });

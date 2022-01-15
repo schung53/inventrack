@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
-import { uploadImage } from '../features/inventory/inventoryAPI';
-import { resize } from '../util/image'
+import { resize } from '../util/image';
 
-export default class FileInput extends Component {
+// Redux
+import { connect } from 'react-redux';
+import { uploadImageAsync, uploadThumbnailAsync } from '../features/inventory/inventorySlice';
+
+export class FileInput extends Component {
     _readURL = (file) => {
         return new Promise((res, rej) => {
             const reader = new FileReader();
@@ -33,12 +36,14 @@ export default class FileInput extends Component {
         }
 
         const handleSubmit = () => {
+            const { uploadImageAsync } = this.props;
             const originalFile = document.getElementById('imageUpload').files.item(0);
-            uploadImage(originalFile);
+            uploadImageAsync(originalFile);
             canvas.toBlob((blob) => {
+                const { uploadThumbnailAsync } = this.props;
                 const fileName = 'mini-' + originalFile.name;
                 let resizedFile = new File([blob], fileName, { type: "image/jpeg" });
-                uploadImage(resizedFile);
+                uploadThumbnailAsync(resizedFile);
             }, 'image/jpeg');
         }
 
@@ -50,3 +55,13 @@ export default class FileInput extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({
+})
+
+const mapActionsToProps = {
+    uploadImageAsync,
+    uploadThumbnailAsync
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(FileInput)

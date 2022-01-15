@@ -9,7 +9,6 @@ import './NewItemModal.module.css';
 import { connect } from 'react-redux';
 import { createInventoryItemAsync } from '../features/inventory/inventorySlice';
 
-
 // UI
 import { Button } from '@mui/material';
 import { IconButton } from '@mui/material';
@@ -66,9 +65,7 @@ export class NewItemModal extends Component {
             open: false,
             name: "",
             trackingNumber: "",
-            dateRegistered: new Date(),
-            imageURL: "",
-            thumbnailURL: ""
+            dateRegistered: new Date()
         };
     }
 
@@ -77,9 +74,7 @@ export class NewItemModal extends Component {
             open: true,
             name: "",
             trackingNumber: "",
-            dateRegistered: new Date(),
-            imageURL: "",
-            thumbnailURL: ""
+            dateRegistered: new Date()
         });
     };
 
@@ -94,13 +89,13 @@ export class NewItemModal extends Component {
     };
 
     handleSubmit = () => {
-        const { createInventoryItemAsync } = this.props;
+        const { createInventoryItemAsync, imageURL, thumbnailURL } = this.props;
         const newItem = {
             name: this.state.name,
             trackingNumber: this.state.trackingNumber,
             dateRegistered: this.state.dateRegistered,
-            imageURL: this.state.imageURL,
-            thumbnailURL: this.state.thumbnailURL
+            imageURL: imageURL,
+            thumbnailURL: thumbnailURL
         };
         createInventoryItemAsync(newItem);
         this.handleClose();
@@ -110,18 +105,11 @@ export class NewItemModal extends Component {
         this.setState({ trackingNumber: uuidv4() });
     };
 
-    isDisabled = () => {
-        const { name, trackingNumber, imageURL, thumbnailURL } = this.state;
-        if (name && trackingNumber && imageURL && thumbnailURL) {
-            return false;
-        }
-        return true;
-    }
-
     render() {
-        const { classes } = this.props;
+        const { classes, imageURL, thumbnailURL } = this.props;
         const { open, name, trackingNumber, dateRegistered } = this.state;
         const humanizedDate = moment(dateRegistered).format("MMMM Do YYYY h:mm a");
+        const allFieldsComplete = name && trackingNumber && imageURL && thumbnailURL;
 
         return (
             <div>
@@ -158,7 +146,7 @@ export class NewItemModal extends Component {
                     <DialogContent className={classes.dialogContent}>
                         <Grid container>
                             <Grid item>
-                                <Typography variant='body1' color="#001c33">
+                                <Typography variant='body1' color="#7f0000">
                                     All fields must be complete
                                 </Typography>
                             </Grid>
@@ -216,8 +204,8 @@ export class NewItemModal extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button
-                            variant="outline"
-                            disabled={this.isDisabled}
+                            variant="outlined"
+                            disabled={!allFieldsComplete}
                             onClick={this.handleSubmit}
                         >
                             Submit
@@ -230,7 +218,9 @@ export class NewItemModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-})
+    imageURL: state.inventory.newImageURL,
+    thumbnailURL: state.inventory.newThumbnailURL
+});
 
 const mapActionsToProps = {
     createInventoryItemAsync

@@ -13,7 +13,10 @@ const initialState = {
     createLoading: false,
     updateLoading: false,
     deleteLoading: false,
-    uploadImageLoading: false
+    uploadImageLoading: false,
+    uploadThumbnailLoading: false,
+    newImageURL: null,
+    newThumbnailURL: null
 };
 
 export const fetchInitialInventoryAsync = createAsyncThunk(
@@ -52,7 +55,15 @@ export const uploadImageAsync = createAsyncThunk(
     'inventory/uploadImage',
     async (file) => {
         const response = await uploadImage(file);
-        return response;
+        return response.data.URL;
+    }
+);
+
+export const uploadThumbnailAsync = createAsyncThunk(
+    'inventory/uploadThumbnail',
+    async (file) => {
+        const response = await uploadImage(file);
+        return response.data.URL;
     }
 );
 
@@ -104,6 +115,14 @@ export const inventorySlice = createSlice({
             })
             .addCase(uploadImageAsync.fulfilled, (state, action) => {
                 state.uploadImageLoading = false;
+                state.newImageURL = action.payload;
+            })
+            .addCase(uploadThumbnailAsync.pending, (state) => {
+                state.uploadThumbnailLoading = true;
+            })
+            .addCase(uploadThumbnailAsync.fulfilled, (state, action) => {
+                state.uploadThumbnailLoading = false;
+                state.newThumbnailURL = action.payload;
             });
     }
 });
