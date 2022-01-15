@@ -28,6 +28,6 @@ Or, check out the demo [here](https://shopify-be-challenge.herokuapp.com/).
 
 ![Screen Shot 2022-01-15 at 2 27 46 AM](https://user-images.githubusercontent.com/63022198/149618526-0f292e09-79ae-4468-8094-b31da2db2b0f.png)
 
-- ADDITIONAL FEATURE: Users can also upload images of the items and the app automatically stores images and generates thumbnails with smaller dimensions for faster loading. Images are considerably smaller in size and are stored on an S3 bucket.
+- ADDITIONAL FEATURE: Users can also upload images of the items and the app automatically stores images and generates thumbnails with smaller dimensions for faster loading. Thumbnails are considerably smaller in size, making the loading time of the home page negligible.
 
 <img width="1292" alt="Screen Shot 2022-01-14 at 1 14 00 AM" src="https://user-images.githubusercontent.com/63022198/149618675-5c4e2b13-d11e-4739-bb63-421031bc1042.png">
