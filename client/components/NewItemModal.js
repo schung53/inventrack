@@ -150,7 +150,7 @@ export class NewItemModal extends Component {
                         <Grid container>
                             <Grid item>
                                 <Typography variant='body1' color="#7f0000">
-                                    *All fields must be complete
+                                    *All fields must be complete (First upload image before submitting)
                                 </Typography>
                             </Grid>
                             <Grid item>
