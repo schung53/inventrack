@@ -35,7 +35,9 @@
   },
   "scripts": {
     "webpack": "webpack",
-    "start": "npm run webpack && nodemon --exec babel-node -- bin/www"
+    "start": "npm run webpack && nodemon --exec babel-node -- bin/www",
+    "heroku-prebuild": "npm install -f",
+    "heroku-postbuild": "npm run prod"
   },
   "eslintConfig": {
     "extends": "react-app"
