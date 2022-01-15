@@ -7,6 +7,7 @@ import './NewItemModal.module.css';
 
 // Redux
 import { connect } from 'react-redux';
+import { createInventoryItemAsync } from '../features/inventory/inventorySlice';
 
 
 // UI
@@ -93,7 +94,16 @@ export class NewItemModal extends Component {
     };
 
     handleSubmit = () => {
-
+        const { createInventoryItemAsync } = this.props;
+        const newItem = {
+            name: this.state.name,
+            trackingNumber: this.state.trackingNumber,
+            dateRegistered: this.state.dateRegistered,
+            imageURL: this.state.imageURL,
+            thumbnailURL: this.state.thumbnailURL
+        };
+        createInventoryItemAsync(newItem);
+        this.handleClose();
     };
 
     generateTrackingNumber = () => {
@@ -223,6 +233,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
+    createInventoryItemAsync
 };
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(NewItemModal));
