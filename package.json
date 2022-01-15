@@ -34,12 +34,11 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "start": "serve -s build",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "webpack": "webpack",
+    "build": "npm run clean && npm run build-babel",
+    "build-babel": "./node_modules/.bin/babel -d ./build ./src",
+    "clean": "rm -rf build && mkdir build",
+    "start": "npm run webpack && node ./build/bin/www"
   },
   "eslintConfig": {
     "extends": "react-app"
