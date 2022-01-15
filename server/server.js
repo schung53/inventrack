@@ -5,9 +5,8 @@ var app = express();
 var mongoose = require('mongoose');
 require('dotenv').config();
 var AWS = require("aws-sdk");
-var multer = require('multer');
 
-app.set('view engine', 'ejs');
+app.set('view engine', 'html');
 app.set('views', path.join(__dirname, '../client'));
 app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.json({limit: '50mb'}));
