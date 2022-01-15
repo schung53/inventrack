@@ -8,8 +8,10 @@ The API was written with Express and the front-end was created with React/Redux.
 
 ## Instructions
 
-1. npm install
-2. npm start
+1. Create a .env file in the root directory
+2. Paste the variables listed in my Shopify application into .env
+3. npm install
+4. npm start
 
 Or, check out the demo [here](https://shopify-be-challenge.herokuapp.com/).
 
