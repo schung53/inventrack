@@ -34,11 +34,8 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "webpack": "webpack",
-    "build": "npm run clean && npm run build-babel",
-    "build-babel": "./node_modules/.bin/babel -d ./build ./src",
-    "clean": "rm -rf build && mkdir build",
-    "start": "npm run webpack && node ./build/bin/www"
+    "build": "webpack --config ./webpack.config.js",
+    "start": "npm run build && nodemon --exec babel-node -- bin/www"
   },
   "eslintConfig": {
     "extends": "react-app"
