@@ -4,7 +4,8 @@ import {
     createInventoryItem,
     updateInventoryItem,
     deleteInventoryItem,
-    uploadImage
+    uploadImage,
+    deleteImages
 } from './inventoryAPI';
 
 const initialState = {
@@ -58,6 +59,14 @@ export const deleteInventoryItemAsync = createAsyncThunk(
     async (id) => {
         const response = await deleteInventoryItem(id);
         return response.data._id;
+    }
+);
+
+export const deleteImagesAsync = createAsyncThunk(
+    'inventory/deleteImages',
+    async (URLs) => {
+        const response = await deleteImages(URLs);
+        return response.data;
     }
 );
 

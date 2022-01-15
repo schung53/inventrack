@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // Redux
 import { connect } from 'react-redux';
-import { deleteInventoryItemAsync } from '../features/inventory/inventorySlice';
+import { deleteInventoryItemAsync, deleteImagesAsync } from '../features/inventory/inventorySlice';
 
 // UI
 import { Button } from '@mui/material';
@@ -11,8 +11,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export class DeleteButton extends Component {
     handleClick = () => {
-        const { id, deleteInventoryItemAsync } = this.props;
-        deleteInventoryItemAsync(id);
+        const { item, deleteInventoryItemAsync, deleteImagesAsync } = this.props;
+        const URLs = {
+            imageURL: item.imageURL,
+            thumbnailURL: item.thumbnailURL
+        };
+        deleteInventoryItemAsync(item._id);
+        deleteImagesAsync(URLs);
     }
 
     render() {
@@ -34,11 +39,12 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
-    deleteInventoryItemAsync
+    deleteInventoryItemAsync,
+    deleteImagesAsync
 };
 
 DeleteButton.propTypes = {
-    id: PropTypes.number
+    item: PropTypes.object
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(DeleteButton);

@@ -71,7 +71,6 @@ router.get('/fetchInitial', (req,res) => {
     InventoryItem
     .find()
     .sort({'dateRegistered': -1})
-    .limit(20)
     .exec((err, items) => {
         if (err) {
             res.send(err);
@@ -109,6 +108,37 @@ router.route('/image')
         .catch((err) => {
             res.send(err);
         });
+    });
+});
+
+
+// Endpoint for deleting images from S3 bucket
+router.route('/deleteImages')
+.post((req,res) => {
+    const baseURL = `https://${process.env.BUCKET_NAME}.s3.${process.env.BUCKET_REGION}.amazonaws.com/`
+    const imageKey = req.body.imageURL.replace(baseURL, "");
+    const thumbnailKey = req.body.thumbnailURL.replace(baseURL, "")
+    const keys = [
+        { Key: imageKey },
+        { Key: thumbnailKey }
+    ];
+
+    var params = {
+        Bucket: process.env.BUCKET_NAME,
+        Delete: {
+            Objects: keys,
+            Quiet: true
+        }
+    };
+
+    var promise = s3.deleteObjects(params).promise();
+
+    promise.then((data) => {
+        res.json({ message: "Images successfully deleted." });
+    })
+    .catch((err) => {
+        console.log(err);
+        res.send(err);
     });
 });
 

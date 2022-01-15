@@ -16,6 +16,10 @@ export function deleteInventoryItem(id) {
     return axios.get(`/delete?id=${id}`);
 }
 
+export function deleteImages(URLs) {
+    return axios.post('/deleteImages', URLs);
+}
+
 export function uploadImage(file) {
     var formData = new FormData();
     formData.append("file", file);

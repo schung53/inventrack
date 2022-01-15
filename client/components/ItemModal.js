@@ -239,7 +239,7 @@ export class ItemModal extends Component {
                             Update
                             <ChangeCircleIcon />
                         </Button>
-                        <DeleteButton id={item._id} />
+                        <DeleteButton item={item} />
                     </DialogActions>
                 </Dialog>
             </div>
