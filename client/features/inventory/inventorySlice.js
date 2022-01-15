@@ -19,11 +19,17 @@ const initialState = {
     newThumbnailURL: null
 };
 
+const formatResponse = (response) => {
+    let formattedResponse = [];
+    response.forEach((item) => {formattedResponse.push({...item, open: false})});
+    return formattedResponse;
+};
+
 export const fetchInitialInventoryAsync = createAsyncThunk(
     'inventory/fetchInventory',
     async () => {
         const response = await fetchInitialInventory();
-        return response.data;
+        return formatResponse(response.data);
     }
 );
 
@@ -31,7 +37,9 @@ export const createInventoryItemAsync = createAsyncThunk(
     'inventory/createInventoryItem',
     async (newItem) => {
         const response = await createInventoryItem(newItem);
-        return response.data.newDocument;
+        var formattedResponse = response.data.newDocument;
+        formattedResponse.open = false;
+        return formattedResponse;
     }
 );
 
@@ -39,7 +47,9 @@ export const updateInventoryItemAsync = createAsyncThunk(
     'inventory/updateInventoryItem',
     async (updatedItem) => {
         const response = await updateInventoryItem(updatedItem);
-        return response.data.newDocument;
+        var formattedResponse = response.data.newDocument;
+        formattedResponse.open = false;
+        return formattedResponse;
     }
 );
 
@@ -70,7 +80,11 @@ export const uploadThumbnailAsync = createAsyncThunk(
 export const inventorySlice = createSlice({
     name: 'inventory',
     initialState,
-    reducers: {},
+    reducers: {
+        setModalOpen: (state, action) => {
+            state.inventory[action.payload.index].open = action.payload.isOpen
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchInitialInventoryAsync.pending, (state) => {
@@ -126,6 +140,8 @@ export const inventorySlice = createSlice({
             });
     }
 });
+
+export const { setModalOpen } = inventorySlice.actions;
 
 export const selectInventory = (state) => state.inventory.inventory;
 

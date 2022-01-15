@@ -55,6 +55,9 @@ const styles = {
         height: '50px',
         border: '1px solid grey',
         borderRadius: '4px'
+    },
+    title: {
+        marginLeft: '-10px'
     }
 };
 
@@ -147,7 +150,7 @@ export class NewItemModal extends Component {
                         <Grid container>
                             <Grid item>
                                 <Typography variant='body1' color="#7f0000">
-                                    All fields must be complete
+                                    *All fields must be complete
                                 </Typography>
                             </Grid>
                             <Grid item>

@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@mui/styles';
+import ItemModal from './ItemModal';
 import moment from 'moment';
 
 // Redux
 import { connect } from 'react-redux';
+import { setModalOpen } from '../features/inventory/inventorySlice';
 
 // UI
 import { Card } from '@mui/material';
 import { CardMedia } from '@mui/material';
 import { CardContent } from '@mui/material';
+import { CardActions } from '@mui/material';
 import { Typography } from '@mui/material';
 import { Grid } from '@mui/material';
 import css from './ItemCard.module.css';
@@ -70,6 +73,8 @@ const styles = {
 
 export class ItemCard extends Component {
     handleClick() {
+        const { index, setModalOpen } = this.props;
+        setModalOpen({index: index, isOpen: true});
     }
 
     _renderCardMedia() {
@@ -128,6 +133,9 @@ export class ItemCard extends Component {
                         </Grid>
                     </Grid>
                 </CardContent>
+                <CardActions>
+                    <ItemModal item={item} index={index} />
+                </CardActions>
             </Card>
             </div>
         );
@@ -138,6 +146,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapActionsToProps = {
+    setModalOpen
 };
 
 ItemCard.propTypes = {
