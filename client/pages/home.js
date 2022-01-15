@@ -36,8 +36,8 @@ export class home extends Component {
                             </Grid>
                             <Grid container>
                                 <Grid item>
-                                    <Typography variant='body1' style={{ margin: '10px auto 20px 15px' }} color='#6db9fb'>
-                                        Inventory tracking made easy
+                                    <Typography variant='body1' style={{ margin: '10px auto 20px 15px' }} color='white'>
+                                        Inventory tracking made easy – Made with ♥ by James S. Chung
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -69,9 +69,6 @@ export class home extends Component {
                         <Grid item xs={0.5} />
                     </Grid>
                 </div>
-                <Typography variant='body2' style={{ margin: '20px 0 20px 0' }} color='white'>
-                    Made with ♥ by James S. Chung – 2022
-                </Typography>
             </div>
         );
     }

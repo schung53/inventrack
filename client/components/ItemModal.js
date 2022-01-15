@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@mui/styles';
+import DeleteButton from './DeleteButton';
 import './ItemModal.module.css';
 
 // Redux
@@ -13,6 +14,7 @@ import { IconButton } from '@mui/material';
 import { Dialog } from '@mui/material';
 import { DialogTitle } from '@mui/material';
 import { DialogContent } from '@mui/material';
+import { DialogActions } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -116,20 +118,20 @@ export class ItemModal extends Component {
                     </DialogTitle>
                     <DialogContent className={classes.dialogContent}>
                         {this._renderCardMedia()}
-                        <Grid container alignItems='center'>
-                            <Grid item>
-                                <Typography variant='body1' className={classes.date}>
-                                    {"Date Registered: " + item.dateRegistered}
-                                </Typography>
-                            </Grid>
-                            <br></br>
-                            <Grid item>
-                                <Typography variant='body1' className={classes.copyright}>
-                                    {"Tracking Number: " + item.trackingNumber}
-                                </Typography>
-                            </Grid>
+                        <Grid>
+                            <Typography variant='body1' className={classes.date}>
+                                {"Date Registered: " + item.dateRegistered}
+                            </Typography>
+                        </Grid>
+                        <Grid>
+                            <Typography variant='body1' className={classes.date}>
+                                {"Tracking Number: " + item.trackingNumber}
+                            </Typography>
                         </Grid>
                     </DialogContent>
+                    <DialogActions>
+                        <DeleteButton id={item._id} />
+                    </DialogActions>
                 </Dialog>
             </div>
         );
