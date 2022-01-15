@@ -45,7 +45,7 @@ export default class FileInput extends Component {
         return (
             <div>
                 <input type="file" id="imageUpload" name="file" onChange={setImage} />
-                <button onClick={handleSubmit}>Submit</button>
+                <button onClick={handleSubmit}>Upload</button>
             </div>
         );
     }

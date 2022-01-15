@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LoadingCard from '../components/LoadingCard';
 import ItemCard from '../components/ItemCard';
+import NewItemModal from '../components/NewItemModal';
 
 // Redux
 import { connect } from 'react-redux';
@@ -40,6 +41,7 @@ export class home extends Component {
                                     </Typography>
                                 </Grid>
                             </Grid>
+                            <NewItemModal />
                             <Grid container justify="center">
                                 {loading ?
                                     <>
@@ -67,7 +69,7 @@ export class home extends Component {
                         <Grid item xs={0.5} />
                     </Grid>
                 </div>
-                <Typography variant='body2' style={{ margin: '20px auto 20px auto' }} color='white'>
+                <Typography variant='body2' style={{ margin: '20px 0 20px 0' }} color='white'>
                     Made with ♥ by James S. Chung – 2022
                 </Typography>
             </div>
